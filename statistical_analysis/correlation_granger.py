@@ -91,7 +91,7 @@ def run():
         na_position="last",
     ).reset_index(drop=True)
 
-    selected_df = results_df[results_df["Granger Selected"] == "Yes"].reset_index(drop=True)
+    selected_df = results_df[results_df["Granger Selected"] == "Yes"].reset_index(drop=True).head(8)
 
     # ── Save ──────────────────────────────────────────────────────────────────
     results_df.to_csv(ALL_CSV, index=False)
