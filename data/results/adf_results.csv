@@ -1,0 +1,21 @@
+Feature,Original p-value,Log p-value,Difference p-value,Final p-value,Transformation,Final Status
+usd_zar,0.728,0.6588,0.0,0.0,Log + Difference,Stationary
+platinum,0.4149,0.2536,0.0,0.0,Log + Difference,Stationary
+US_Sugar,0.106,0.1106,0.0,0.0,Log + Difference,Stationary
+US_Soybeans,0.171,0.2155,0.0,0.0,Log + Difference,Stationary
+US_Soybean_Meal,0.0808,0.1265,0.0,0.0,Log + Difference,Stationary
+Nickel,0.0196,N/A,N/A,0.0196,None,Stationary
+Hard_Red_Winter_Wheat,0.1098,0.0974,0.0,0.0,Log + Difference,Stationary
+US_Soybean_Oil,0.2174,0.2738,0.0,0.0,Log + Difference,Stationary
+Gold,1.0,0.9558,0.0,0.0,Log + Difference,Stationary
+Silver,0.9985,0.8747,0.0,0.0,Log + Difference,Stationary
+US_Copper,0.8042,0.5858,0.0,0.0,Log + Difference,Stationary
+Natural_Gas,0.0163,N/A,N/A,0.0163,None,Stationary
+US_beef,0.9839,0.8894,0.0,0.0,Log + Difference,Stationary
+Orange_Juice,0.2435,0.2049,0.0,0.0,Log + Difference,Stationary
+Brent_Oil,0.1743,0.1259,0.0,0.0,Log + Difference,Stationary
+Lead,0.2756,0.3562,0.0,0.0,Log + Difference,Stationary
+Tin,0.6289,0.3378,0.0,0.0,Log + Difference,Stationary
+US_Cotton,0.3557,0.6559,0.0,0.0,Log + Difference,Stationary
+Iron_ore_62Fe,0.0763,0.1596,0.0,0.0,Log + Difference,Stationary
+Palladium,0.7076,0.7436,0.0,0.0,Log + Difference,Stationary

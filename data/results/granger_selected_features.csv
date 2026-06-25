@@ -1,0 +1,7 @@
+Commodity,Pearson Correlation,Absolute Pearson Corr,Best Granger Lag,Min Granger p-value,Granger Selected
+Gold,-0.2521,0.2521,1,0.0,Yes
+Silver,-0.3075,0.3075,4,0.0003,Yes
+Palladium,-0.0378,0.0378,3,0.0031,Yes
+Tin,-0.227,0.227,4,0.0048,Yes
+US_Soybeans,-0.1574,0.1574,1,0.0236,Yes
+US_Soybean_Oil,-0.1745,0.1745,1,0.0298,Yes
