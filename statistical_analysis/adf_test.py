@@ -1,9 +1,22 @@
-import os
+"""
+adf_test.py — Stage 2: Stationarity Testing via ADF on log returns.
+
+Pipeline: Raw Prices → Log Returns → Drop first NaN → ADF test →
+          If non-stationary: first-difference log return → re-test → Save
+Inputs:  data/processed/mergedFinalData_preprocessed.csv
+Outputs: data/results/adf_results.csv
+         data/results/stationary_data.csv
+Column naming: <commodity>_logret | <commodity>_logret_diff1
+"""
+
+import os, sys
 import numpy as np
 import pandas as pd
 from statsmodels.tsa.stattools import adfuller
 
-# ── Paths ─────────────────────────────────────────────────────────────────────
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8")
+
 INPUT    = "data/processed/mergedFinalData_preprocessed.csv"
 OUT_DIR  = "data/results"
 ADF_CSV  = f"{OUT_DIR}/adf_results.csv"
@@ -13,109 +26,127 @@ ALPHA    = 0.05
 os.makedirs(OUT_DIR, exist_ok=True)
 
 
-# ── Helpers ───────────────────────────────────────────────────────────────────
-
-def adf_pvalue(series: pd.Series) -> float | None:
-    """
-    Run ADF test and return p-value.
-    Returns None if the series is constant, too short, or raises an error.
-    """
+def run_adf(series, label):
     s = series.dropna()
-    if len(s) < 20 or s.nunique() < 2:  
-        return None
+    if len(s) < 20:
+        print(f"  [SKIP] '{label}': too few observations ({len(s)}) for ADF.")
+        return _null_adf()
+    if s.nunique() < 2:
+        print(f"  [SKIP] '{label}': constant series — ADF not meaningful.")
+        return _null_adf()
     try:
-        return float(adfuller(s, autolag="AIC")[1])
-    except Exception:
-        return None
+        adf_stat, p_val, _, _, crit_vals, _ = adfuller(s, autolag="AIC")
+        return {
+            "adf_stat":   round(float(adf_stat), 4),
+            "p_value":    round(float(p_val),    4),
+            "crit_1pct":  round(crit_vals["1%"],  4),
+            "crit_5pct":  round(crit_vals["5%"],  4),
+            "crit_10pct": round(crit_vals["10%"], 4),
+            "stationary": float(p_val) < ALPHA,
+        }
+    except Exception as e:
+        print(f"  [ERROR] ADF failed for '{label}': {e}")
+        return _null_adf()
 
 
-def try_transform(series: pd.Series):
-    """
-    Attempt transformations in order: Log → Log+Diff / Diff.
-    Returns (final_series, log_p, diff_p, transformation_label).
-
-    Log is skipped entirely if any value is ≤ 0.
-    """
-    log_p = diff_p = None
-    can_log = (series > 0).all()
-
-    if can_log:
-        log_s = np.log(series)
-        log_p = adf_pvalue(log_s)
-        if log_p is not None and log_p < ALPHA:
-            return log_s, log_p, None, "Log"
-
-        # Log didn't help → difference the log series (log-return)
-        diff_s = log_s.diff().dropna()
-        diff_p = adf_pvalue(diff_s)
-        return diff_s, log_p, diff_p, "Log + Difference"
-    else:
-        # Values ≤ 0 → skip log, apply differencing directly
-        diff_s = series.diff().dropna()
-        diff_p = adf_pvalue(diff_s)
-        return diff_s, None, diff_p, "Difference"
+def _null_adf():
+    return dict(adf_stat=None, p_value=None, crit_1pct=None,
+                crit_5pct=None, crit_10pct=None, stationary=None)
 
 
-# ── Main ──────────────────────────────────────────────────────────────────────
+def compute_log_return(series):
+    s = series.copy()
+    n = int((s <= 0).sum())
+    if n > 0:
+        print(f"    ⚠  '{series.name}': {n} non-positive price(s) replaced with NaN before log.")
+        s[s <= 0] = np.nan
+    return np.log(s).diff()
+
 
 def run():
+    print("=" * 70)
+    print("ADF STATIONARITY TEST  (log-return based)")
+    print("=" * 70)
+
     df = pd.read_csv(INPUT, index_col="Date", parse_dates=True)
-    cols = df.select_dtypes(include="number").columns.tolist()
+    price_cols = df.select_dtypes(include="number").columns.tolist()
+    print(f"\n[1] Loaded '{INPUT}'\n    Rows: {len(df)}  Price cols: {len(price_cols)} → {price_cols}")
 
-    records   = []   # summary rows for adf_results.csv
-    stat_data = {}   # col → final stationary series
+    print("\n[2] Computing log returns …")
+    logret_df = pd.DataFrame(
+        {f"{col}_logret": compute_log_return(df[col]) for col in price_cols},
+        index=df.index
+    )
 
-    for col in cols:
-        series = df[col].dropna()
-        p_orig = adf_pvalue(series)
+    logret_df = logret_df.iloc[1:].copy()
+    print(f"\n[3] Log-return DataFrame: {logret_df.shape}  (first NaN row dropped)")
 
-        if p_orig is not None and p_orig < ALPHA:
-            # ── Already stationary ────────────────────────────────────────────
-            stat_data[col] = series
-            records.append({
-                "Feature":              col,
-                "Original p-value":     round(p_orig, 4),
-                "Log p-value":          "N/A",
-                "Difference p-value":   "N/A",
-                "Final p-value":        round(p_orig, 4),
-                "Transformation":       "None",
-                "Final Status":         "Stationary",
-            })
+    print("\n[4] Running ADF tests …\n")
+    records, stat_data = [], {}
 
+    for logret_col in logret_df.columns:
+        base_name = logret_col.replace("_logret", "")
+        series    = logret_df[logret_col]
+        print(f"  Testing : {logret_col}")
+
+        adf1 = run_adf(series, logret_col)
+
+        if adf1["stationary"] is True:
+            stat_data[logret_col] = series
+            final_transform = "Log Return"
+            final_col_name  = logret_col
+            adf2, used_diff = {}, False
         else:
-            # ── Apply transformations ─────────────────────────────────────────
-            final_s, log_p, diff_p, label = try_transform(series)
+            diff1_series = series.diff().dropna()
+            diff1_col    = f"{base_name}_logret_diff1"
+            adf2         = run_adf(diff1_series, diff1_col)
+            if adf2.get("stationary") is True:
+                stat_data[diff1_col] = diff1_series
+                final_transform = "Log Return + First Difference"
+                final_col_name  = diff1_col
+            else:
+                final_transform = "Log Return + First Difference (still non-stationary)"
+                final_col_name  = "–"
+            used_diff = True
 
-            # Determine the p-value of the last transformation applied
-            last_p = diff_p if diff_p is not None else log_p
-            is_stationary = last_p is not None and last_p < ALPHA
+        records.append({
+            "Feature":                   base_name,
+            "Original Transformation":   "Log Return",
+            "ADF Statistic (logret)":    adf1.get("adf_stat",   "N/A"),
+            "p-value (logret)":          adf1.get("p_value",    "N/A"),
+            "Crit 1% (logret)":          adf1.get("crit_1pct",  "N/A"),
+            "Crit 5% (logret)":          adf1.get("crit_5pct",  "N/A"),
+            "Crit 10% (logret)":         adf1.get("crit_10pct", "N/A"),
+            "Stationary (logret)":       "Yes" if adf1.get("stationary") else "No",
+            "ADF Statistic (diff1)":     adf2.get("adf_stat",   "N/A") if used_diff else "N/A",
+            "p-value (diff1)":           adf2.get("p_value",    "N/A") if used_diff else "N/A",
+            "Stationary (diff1)":        ("Yes" if adf2.get("stationary") else "No") if used_diff else "N/A",
+            "Final Transformation Used": final_transform,
+            "Final Column Name":         final_col_name,
+            "Overall Stationary":        "Yes" if final_col_name != "–" else "No",
+        })
 
-            if is_stationary:
-                stat_data[col] = final_s          # save only if stationary
-
-            records.append({
-                "Feature":            col,
-                "Original p-value":   round(p_orig, 4) if p_orig is not None else "N/A",
-                "Log p-value":        round(log_p,  4) if log_p  is not None else "N/A",
-                "Difference p-value": round(diff_p, 4) if diff_p is not None else "N/A",
-                "Final p-value":      round(last_p, 4) if last_p is not None else "N/A",
-                "Transformation":     label,
-                "Final Status":       "Stationary" if is_stationary else "Still Non-Stationary",
-            })
-
-    # ── Save outputs ──────────────────────────────────────────────────────────
-    results_df = pd.DataFrame(records)
-    results_df.to_csv(ADF_CSV, index=False)
-
+    results_df    = pd.DataFrame(records)
     stationary_df = pd.DataFrame(stat_data)
+    results_df.to_csv(ADF_CSV, index=False)
     stationary_df.to_csv(STAT_CSV)
 
-    # ── Print summary ─────────────────────────────────────────────────────────
-    print(results_df.to_string(index=False))
-    ok  = results_df["Final Status"].eq("Stationary").sum()
-    bad = len(results_df) - ok
-    print(f"\n✅ Stationary: {ok}  |  ❌ Still Non-Stationary: {bad}")
-    print(f"Saved → {ADF_CSV}\n        {STAT_CSV}")
+    print("\n" + "=" * 70)
+    print("ADF RESULTS SUMMARY")
+    print("=" * 70)
+    print(results_df[[
+        "Feature", "p-value (logret)", "Stationary (logret)",
+        "p-value (diff1)", "Stationary (diff1)", "Final Transformation Used"
+    ]].to_string(index=False))
+
+    n_stat = results_df["Overall Stationary"].eq("Yes").sum()
+    print(f"\n✅ Stationary series saved : {n_stat}")
+    print(f"❌ Could not achieve stationarity : {len(results_df) - n_stat}")
+    print(f"\n📁 Stationary columns in '{STAT_CSV}':")
+    for col in stationary_df.columns:
+        print(f"   • {col}")
+    print(f"\nSaved → {ADF_CSV}")
+    print(f"Saved → {STAT_CSV}")
 
 
 if __name__ == "__main__":

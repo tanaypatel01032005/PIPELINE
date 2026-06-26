@@ -1,0 +1,24 @@
+=================================================================
+TRAIN / TEST SPLIT SUMMARY
+=================================================================
+  Input file           : data/results/engineered_features.csv
+  Target variable      : usd_zar_logret_next
+  Split ratio          : 80% train / 19% test
+
+  Total rows           :   6772
+  Training rows        :   5417  (80.0%)
+  Testing rows         :   1355  (20.0%)
+  Number of features   :     56
+
+  Training date range  : 2000-01-17 --> 2020-10-20
+  Testing  date range  : 2020-10-21 --> 2025-12-30
+
+  Data leakage check   :
+    Max train date (2020-10-20) < Min test date (2020-10-21)  [OK]
+
+  Output files:
+    data/model_input/X_train.csv    ((5417, 56))
+    data/model_input/X_test.csv     ((1355, 56))
+    data/model_input/y_train.csv    ((5417,))
+    data/model_input/y_test.csv     ((1355,))
+=================================================================

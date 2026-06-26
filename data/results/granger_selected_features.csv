@@ -1,7 +1,7 @@
-Commodity,Pearson Correlation,Absolute Pearson Corr,Best Granger Lag,Min Granger p-value,Granger Selected
-Gold,-0.2521,0.2521,1,0.0,Yes
-Silver,-0.3075,0.3075,4,0.0003,Yes
-Palladium,-0.0378,0.0378,3,0.0031,Yes
-Tin,-0.227,0.227,4,0.0048,Yes
-US_Soybeans,-0.1574,0.1574,1,0.0236,Yes
-US_Soybean_Oil,-0.1745,0.1745,1,0.0298,Yes
+Commodity,LogRet_Column,Pearson_r,Pearson_p,Abs_Pearson_r,Best_Granger_Lag,Min_Granger_p,Granger_Selected
+Gold,Gold_logret,-0.2521,0.0,0.2521,1,0.0,Yes
+Silver,Silver_logret,-0.3075,0.0,0.3075,4,0.0003,Yes
+Palladium,Palladium_logret,-0.0378,0.0019,0.0378,3,0.0031,Yes
+Tin,Tin_logret,-0.227,0.0,0.227,4,0.0048,Yes
+US_Soybeans,US_Soybeans_logret,-0.1574,0.0,0.1574,1,0.0236,Yes
+US_Soybean_Oil,US_Soybean_Oil_logret,-0.1745,0.0,0.1745,1,0.0298,Yes

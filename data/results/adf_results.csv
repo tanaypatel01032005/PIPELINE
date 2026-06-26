@@ -1,21 +1,21 @@
-Feature,Original p-value,Log p-value,Difference p-value,Final p-value,Transformation,Final Status
-usd_zar,0.728,0.6588,0.0,0.0,Log + Difference,Stationary
-platinum,0.4149,0.2536,0.0,0.0,Log + Difference,Stationary
-US_Sugar,0.106,0.1106,0.0,0.0,Log + Difference,Stationary
-US_Soybeans,0.171,0.2155,0.0,0.0,Log + Difference,Stationary
-US_Soybean_Meal,0.0808,0.1265,0.0,0.0,Log + Difference,Stationary
-Nickel,0.0196,N/A,N/A,0.0196,None,Stationary
-Hard_Red_Winter_Wheat,0.1098,0.0974,0.0,0.0,Log + Difference,Stationary
-US_Soybean_Oil,0.2174,0.2738,0.0,0.0,Log + Difference,Stationary
-Gold,1.0,0.9558,0.0,0.0,Log + Difference,Stationary
-Silver,0.9985,0.8747,0.0,0.0,Log + Difference,Stationary
-US_Copper,0.8042,0.5858,0.0,0.0,Log + Difference,Stationary
-Natural_Gas,0.0163,N/A,N/A,0.0163,None,Stationary
-US_beef,0.9839,0.8894,0.0,0.0,Log + Difference,Stationary
-Orange_Juice,0.2435,0.2049,0.0,0.0,Log + Difference,Stationary
-Brent_Oil,0.1743,0.1259,0.0,0.0,Log + Difference,Stationary
-Lead,0.2756,0.3562,0.0,0.0,Log + Difference,Stationary
-Tin,0.6289,0.3378,0.0,0.0,Log + Difference,Stationary
-US_Cotton,0.3557,0.6559,0.0,0.0,Log + Difference,Stationary
-Iron_ore_62Fe,0.0763,0.1596,0.0,0.0,Log + Difference,Stationary
-Palladium,0.7076,0.7436,0.0,0.0,Log + Difference,Stationary
+Feature,Original Transformation,ADF Statistic (logret),p-value (logret),Crit 1% (logret),Crit 5% (logret),Crit 10% (logret),Stationary (logret),ADF Statistic (diff1),p-value (diff1),Stationary (diff1),Final Transformation Used,Final Column Name,Overall Stationary
+usd_zar,Log Return,-37.9109,0.0,-3.4313,-2.862,-2.567,Yes,N/A,N/A,N/A,Log Return,usd_zar_logret,Yes
+platinum,Log Return,-16.814,0.0,-3.4313,-2.862,-2.567,Yes,N/A,N/A,N/A,Log Return,platinum_logret,Yes
+US_Sugar,Log Return,-55.3764,0.0,-3.4313,-2.862,-2.567,Yes,N/A,N/A,N/A,Log Return,US_Sugar_logret,Yes
+US_Soybeans,Log Return,-16.7379,0.0,-3.4313,-2.862,-2.567,Yes,N/A,N/A,N/A,Log Return,US_Soybeans_logret,Yes
+US_Soybean_Meal,Log Return,-16.6708,0.0,-3.4313,-2.862,-2.567,Yes,N/A,N/A,N/A,Log Return,US_Soybean_Meal_logret,Yes
+Nickel,Log Return,-20.134,0.0,-3.4313,-2.862,-2.567,Yes,N/A,N/A,N/A,Log Return,Nickel_logret,Yes
+Hard_Red_Winter_Wheat,Log Return,-42.9503,0.0,-3.4313,-2.862,-2.567,Yes,N/A,N/A,N/A,Log Return,Hard_Red_Winter_Wheat_logret,Yes
+US_Soybean_Oil,Log Return,-81.2291,0.0,-3.4313,-2.862,-2.567,Yes,N/A,N/A,N/A,Log Return,US_Soybean_Oil_logret,Yes
+Gold,Log Return,-26.2838,0.0,-3.4313,-2.862,-2.567,Yes,N/A,N/A,N/A,Log Return,Gold_logret,Yes
+Silver,Log Return,-57.776,0.0,-3.4313,-2.862,-2.567,Yes,N/A,N/A,N/A,Log Return,Silver_logret,Yes
+US_Copper,Log Return,-14.8682,0.0,-3.4313,-2.862,-2.567,Yes,N/A,N/A,N/A,Log Return,US_Copper_logret,Yes
+Natural_Gas,Log Return,-36.0548,0.0,-3.4313,-2.862,-2.567,Yes,N/A,N/A,N/A,Log Return,Natural_Gas_logret,Yes
+US_beef,Log Return,-20.8845,0.0,-3.4313,-2.862,-2.567,Yes,N/A,N/A,N/A,Log Return,US_beef_logret,Yes
+Orange_Juice,Log Return,-23.2233,0.0,-3.4313,-2.862,-2.567,Yes,N/A,N/A,N/A,Log Return,Orange_Juice_logret,Yes
+Brent_Oil,Log Return,-36.8597,0.0,-3.4313,-2.862,-2.567,Yes,N/A,N/A,N/A,Log Return,Brent_Oil_logret,Yes
+Lead,Log Return,-14.9632,0.0,-3.4313,-2.862,-2.567,Yes,N/A,N/A,N/A,Log Return,Lead_logret,Yes
+Tin,Log Return,-47.1559,0.0,-3.4313,-2.862,-2.567,Yes,N/A,N/A,N/A,Log Return,Tin_logret,Yes
+US_Cotton,Log Return,-15.35,0.0,-3.4313,-2.862,-2.567,Yes,N/A,N/A,N/A,Log Return,US_Cotton_logret,Yes
+Iron_ore_62Fe,Log Return,-15.7771,0.0,-3.4313,-2.862,-2.567,Yes,N/A,N/A,N/A,Log Return,Iron_ore_62Fe_logret,Yes
+Palladium,Log Return,-19.7057,0.0,-3.4313,-2.862,-2.567,Yes,N/A,N/A,N/A,Log Return,Palladium_logret,Yes
