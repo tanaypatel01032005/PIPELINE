@@ -1,6 +1,9 @@
 import pandas as pd
 from statsmodels.tsa.stattools import adfuller, kpss
 import os
+import warnings
+from statsmodels.tools.sm_exceptions import InterpolationWarning
+warnings.filterwarnings("ignore", category=InterpolationWarning)
 
 df = pd.read_csv("data/results/log_return_data.csv")
 numeric_cols = df.select_dtypes(include="number").columns
