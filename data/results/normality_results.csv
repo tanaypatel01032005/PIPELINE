@@ -1,30 +1,26 @@
 Column,JB_Statistic,p_value,Result
-usd_zar_logret,6020.979581,0.0,Non-Normal
-Brent_Oil_logret,32472.525349,0.0,Non-Normal
-Natural_Gas_logret,9508.3653,0.0,Non-Normal
-US_Soybean_Oil_logret,1297.429906,0.0,Non-Normal
-US_Soybean_Meal_logret,37747.215726,0.0,Non-Normal
-Gold_logret,8316.519435,0.0,Non-Normal
-US_Copper_logret,189018.547484,0.0,Non-Normal
-Silver_logret,14773.360221,0.0,Non-Normal
-US_Sugar_logret,1452321.482266,0.0,Non-Normal
-US_Soybeans_logret,84066.29531,0.0,Non-Normal
-Hard_Red_Winter_Wheat_logret,8375.531965,0.0,Non-Normal
-Nickel_logret,10524971.247489,0.0,Non-Normal
-Orange_Juice_logret,4138.91084,0.0,Non-Normal
-platinum_logret,13869543.885911,0.0,Non-Normal
-Lead_logret,490709.567947,0.0,Non-Normal
-US_beef_logret,74916.504708,0.0,Non-Normal
-Palladium_logret,1433489.921965,0.0,Non-Normal
-US_Cotton_logret,132767157.951945,0.0,Non-Normal
-Tin_logret,171892.490292,0.0,Non-Normal
-Cocoa_logret,21321.265334,0.0,Non-Normal
-Coffee_logret,2166.03882,0.0,Non-Normal
-Corn_logret,66485.084059,0.0,Non-Normal
-Heating_Oil_logret,18924.276761,0.0,Non-Normal
-Lean_Hogs_logret,254175.012998,0.0,Non-Normal
-Oats_logret,2934082.385285,0.0,Non-Normal
-RBOB_Gasoline_logret,97861.692675,0.0,Non-Normal
-Rhodium_logret,249101966.753673,0.0,Non-Normal
-Rice_logret,426841.63076,0.0,Non-Normal
-WTI_Crude_Oil_logret,87602.927846,0.0,Non-Normal
+usd_zar_logret,5804.842479,0.0,Non-Normal
+platinum_logret,16378407.545605,0.0,Non-Normal
+US_Sugar_logret,1478586.138978,0.0,Non-Normal
+US_Soybeans_logret,86383.546559,0.0,Non-Normal
+US_Soybean_Meal_logret,38426.492108,0.0,Non-Normal
+Hard_Red_Winter_Wheat_logret,8632.606264,0.0,Non-Normal
+US_Soybean_Oil_logret,1006.123875,0.0,Non-Normal
+Gold_logret,9108.53927,0.0,Non-Normal
+Silver_logret,15802.158082,0.0,Non-Normal
+US_Copper_logret,185688.092199,0.0,Non-Normal
+Natural_Gas_logret,8220.154589,0.0,Non-Normal
+US_beef_logret,76574.613515,0.0,Non-Normal
+Orange_Juice_logret,1860.637445,0.0,Non-Normal
+Brent_Oil_logret,32864.664466,0.0,Non-Normal
+US_Cotton_logret,225400507.963052,0.0,Non-Normal
+Palladium_logret,1062185.871368,0.0,Non-Normal
+Cocoa_logret,24818.841483,0.0,Non-Normal
+Coffee_logret,2364.877092,0.0,Non-Normal
+Corn_logret,64372.220744,0.0,Non-Normal
+Heating Oil_logret,17853.421895,0.0,Non-Normal
+Lean Hogs_logret,398.744471,0.0,Non-Normal
+Oats_logret,3007683.141325,0.0,Non-Normal
+RBOB Gasoline_logret,86973.699858,0.0,Non-Normal
+Rice_logret,434468.420766,0.0,Non-Normal
+WTI Crude Oil_logret,84944.793439,0.0,Non-Normal
