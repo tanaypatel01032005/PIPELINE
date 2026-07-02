@@ -1,14 +1,27 @@
+"""
+granger_causality.py — Analysis Stage
+Performs Pearson correlation and Granger causality tests on stationary variables to select modeling features.
+
+Input  : data/processed/stationary_data.csv
+Outputs: data/results/correlation_granger_results.csv
+         data/processed/selected_features.csv
+"""
+
 import warnings
 import pandas as pd
 from scipy.stats import pearsonr
 from statsmodels.tsa.stattools import grangercausalitytests
-import os
+from pathlib import Path
 
 warnings.filterwarnings("ignore", category=FutureWarning)
 
-df = pd.read_csv("data/results/stationary_data.csv").dropna()
+# -- Paths -------------------------------------------------------------------
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+INPUT_CSV = PROJECT_ROOT / "data" / "results" / "stationary_data.csv"
+RESULTS_CSV = PROJECT_ROOT / "data" / "results" / "correlation_granger_results.csv"
+SELECTED_FEATURES_CSV = PROJECT_ROOT / "data" / "results" / "granger_selected_features.csv"
 
-os.makedirs("data/results", exist_ok=True)
+df = pd.read_csv(INPUT_CSV).dropna()
 
 target = "usd_zar_logret"
 commodity_cols = [c for c in df.columns if c != target]
@@ -49,10 +62,10 @@ for col in commodity_cols:
         granger_rows.append({"Feature": col, "Granger_min_p": round(min_p, 6)})
 
 corr_df = pd.DataFrame(corr_rows)
-corr_df.to_csv("data/results/correlation_granger_results.csv", index=False)
+corr_df.to_csv(RESULTS_CSV, index=False)
 
 selected_cols = [target] + selected_features
-df[selected_cols].to_csv("data/results/granger_selected_features.csv", index=False)
+df[selected_cols].to_csv(SELECTED_FEATURES_CSV, index=False)
 
 print(f"Granger-significant features ({len(selected_features)}): {selected_features}")
 print(corr_df.to_string(index=False))

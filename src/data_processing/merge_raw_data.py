@@ -1,7 +1,7 @@
 """
-merge_final_data.py
--------------------
-Creates mergedFinalData.csv by:
+merge_raw_data.py
+-----------------
+Creates merged_raw_data.csv by:
   1. Building a weekday date spine: 01/01/2000 - 31/12/2025 (no Sat/Sun)
   2. Adding usd_zar column from _usd_zar.csv
   3. For every numbered CSV (1_*.csv to 31_*.csv):
@@ -22,8 +22,10 @@ if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8")
 
 # -- Paths -------------------------------------------------------------------
-BASE_DIR   = Path(__file__).parent          # .../FINAL DATA/DATA-
-OUTPUT_CSV = BASE_DIR / "mergedFinalData.csv"
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+RAW_DIR      = PROJECT_ROOT / "data" / "raw"
+PROCESSED_DIR = PROJECT_ROOT / "data" / "processed"
+OUTPUT_CSV   = PROCESSED_DIR / "mergedFinalData.csv"
 
 # -- 1. Build weekday date spine ---------------------------------------------
 print("Building date spine (Mon-Fri, 2000-01-01 to 2025-12-31) ...")
@@ -43,7 +45,7 @@ def parse_dates(series):
             return pd.to_datetime(series, format=fmt)
         except (ValueError, TypeError):
             pass
-    return pd.to_datetime(series, infer_datetime_format=True)
+    return pd.to_datetime(series)
 
 # -- Helper: clean numeric column (strip commas, %) --------------------------
 def clean_numeric(series):
@@ -55,7 +57,7 @@ def clean_numeric(series):
 
 # -- 2. Load USD/ZAR ---------------------------------------------------------
 print("\nLoading USD/ZAR ...")
-zar_path = BASE_DIR / "_usd_zar.csv"
+zar_path = RAW_DIR / "_usd_zar.csv"
 zar_df   = pd.read_csv(zar_path)
 
 date_col = next((c for c in zar_df.columns if "date" in c.lower()), zar_df.columns[0])
@@ -73,7 +75,7 @@ print("  -> USD/ZAR merged  (" + str(zar_df["usd_zar"].notna().sum()) + " non-nu
 commodity_pattern = re.compile(r"^(\d+)_(.+)\.csv$", re.IGNORECASE)
 
 csv_files = sorted(
-    [f for f in BASE_DIR.iterdir() if commodity_pattern.match(f.name)],
+    [f for f in RAW_DIR.iterdir() if commodity_pattern.match(f.name)],
     key=lambda f: int(commodity_pattern.match(f.name).group(1))
 )
 

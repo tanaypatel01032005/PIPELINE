@@ -1,17 +1,20 @@
 """
-preprocess.py — Preprocessing Stage
+clean_data.py — Preprocessing & Cleaning Stage
 Cleans and prepares the raw merged commodity-currency dataset.
 
-Input  : data/processed/mergedFinalData.csv
-Output : data/processed/mergedFinalData_final.csv
+Input  : data/processed/merged_raw_data.csv
+Output : data/processed/cleaned_data.csv
 """
 
 import pandas as pd
 import numpy as np
 from pykalman import KalmanFilter
+from pathlib import Path
 
-INPUT_CSV = "data/processed/mergedFinalData.csv"
-OUTPUT_CSV = "data/processed/mergedFinalData_final.csv"
+# -- Paths -------------------------------------------------------------------
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+INPUT_CSV = PROJECT_ROOT / "data" / "processed" / "mergedFinalData.csv"
+OUTPUT_CSV = PROJECT_ROOT / "data" / "processed" / "preprocessed_data.csv"
 
 # Some columns in the CSV use spaces; we rename them to underscores.
 RENAME_MAP = {
