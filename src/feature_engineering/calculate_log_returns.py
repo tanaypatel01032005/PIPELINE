@@ -1,9 +1,9 @@
 """
-calculate_log_returns.py — Feature Engineering Stage
+calculate_log_returns.py - Feature Engineering Stage
 Computes log returns for all numeric variables.
 
-Input  : data/processed/cleaned_data.csv
-Output : data/processed/log_returns.csv
+Input  : data/processed/preprocessed_data.csv
+Output : data/results/log_return_data.csv
 """
 
 import pandas as pd

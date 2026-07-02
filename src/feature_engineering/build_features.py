@@ -67,8 +67,8 @@ def main():
     if "Gold_logret" in combined_df.columns and "Silver_logret" in combined_df.columns:
         features_df["gold_silver_spread"] = (combined_df["Gold_logret"] - combined_df["Silver_logret"]).shift(1)
     # Brent-WTI spread
-    if "Brent_Oil_logret" in combined_df.columns and "WTI Crude Oil_logret" in combined_df.columns:
-        features_df["brent_wti_spread"] = (combined_df["Brent_Oil_logret"] - combined_df["WTI Crude Oil_logret"]).shift(1)
+    if "Brent_Oil_logret" in combined_df.columns and "WTI_Crude_Oil_logret" in combined_df.columns:
+        features_df["brent_wti_spread"] = (combined_df["Brent_Oil_logret"] - combined_df["WTI_Crude_Oil_logret"]).shift(1)
     # Platinum-Palladium spread
     if "platinum_logret" in combined_df.columns and "Palladium_logret" in combined_df.columns:
         features_df["platinum_palladium_spread"] = (combined_df["platinum_logret"] - combined_df["Palladium_logret"]).shift(1)

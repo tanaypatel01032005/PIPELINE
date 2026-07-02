@@ -3,3 +3,6 @@ pandas
 pykalman
 scipy
 statsmodels
+matplotlib
+seaborn
+scikit-learn

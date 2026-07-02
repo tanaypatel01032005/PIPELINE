@@ -18,9 +18,9 @@ Palladium_logret,0.0,0.1,Stationary
 Cocoa_logret,0.0,0.1,Stationary
 Coffee_logret,0.0,0.1,Stationary
 Corn_logret,0.0,0.1,Stationary
-Heating Oil_logret,0.0,0.1,Stationary
-Lean Hogs_logret,0.0,0.1,Stationary
+Heating_Oil_logret,0.0,0.1,Stationary
+Lean_Hogs_logret,0.0,0.1,Stationary
 Oats_logret,0.0,0.1,Stationary
-RBOB Gasoline_logret,0.0,0.1,Stationary
+RBOB_Gasoline_logret,0.0,0.1,Stationary
 Rice_logret,0.0,0.1,Stationary
-WTI Crude Oil_logret,0.0,0.1,Stationary
+WTI_Crude_Oil_logret,0.0,0.1,Stationary

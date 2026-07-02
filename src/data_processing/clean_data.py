@@ -1,9 +1,9 @@
 """
-clean_data.py — Preprocessing & Cleaning Stage
+clean_data.py - Preprocessing & Cleaning Stage
 Cleans and prepares the raw merged commodity-currency dataset.
 
-Input  : data/processed/merged_raw_data.csv
-Output : data/processed/cleaned_data.csv
+Input  : data/processed/mergedFinalData.csv
+Output : data/processed/preprocessed_data.csv
 """
 
 import pandas as pd
@@ -38,7 +38,6 @@ COLUMNS = [
     "US_Sugar",
     "US_Soybeans",
     "Hard_Red_Winter_Wheat",
-    "Nickel",
     "Orange_Juice",
     "platinum",
     "Lead",
@@ -53,7 +52,6 @@ COLUMNS = [
     "Lean_Hogs",
     "Oats",
     "RBOB_Gasoline",
-    "Rhodium",
     "Rice",
     "WTI_Crude_Oil",
 ]
@@ -75,6 +73,8 @@ DROP_COLUMNS = [
     "Diamond_Index",
     "Manganese",
     "Barley",
+    "Nickel",
+    "Rhodium",
 ]
 
 # Columns that should use Kalman Smoother
