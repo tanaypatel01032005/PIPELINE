@@ -66,6 +66,10 @@ def main():
     features_df = pd.DataFrame(index=combined_df.index)
     target = combined_df["usd_zar_logret"]
 
+    features_df["usd_zar_logret"] = target
+    features_df["usd_zar_logret_next"] = target.shift(-1)
+    features_df["usd_zar"] = combined_df["usd_zar"]
+
     print("\nBuilding features...")
 
     # --- 1. Target Lags ---
