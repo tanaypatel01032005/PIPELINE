@@ -17,16 +17,26 @@ warnings.filterwarnings("ignore", category=FutureWarning)
 
 # -- Paths -------------------------------------------------------------------
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
-INPUT_CSV = PROJECT_ROOT / "data" / "results" / "stationary_data.csv"
-RESULTS_CSV = PROJECT_ROOT / "data" / "results" / "correlation_granger_results.csv"
-SELECTED_FEATURES_CSV = PROJECT_ROOT / "data" / "results" / "granger_selected_features.csv"
+INPUT_CSV = PROJECT_ROOT / "data" / "results" / "log_returns.csv"
+RESULTS_CSV = PROJECT_ROOT / "data" / "results" / "correlation_granger_analysis.csv"
+SELECTED_FEATURES_CSV = PROJECT_ROOT / "data" / "results" / "selected_granger_features.csv"
 
-df = pd.read_csv(INPUT_CSV).dropna()
+df = pd.read_csv(INPUT_CSV)
 
 target = "usd_zar_logret"
-commodity_cols = [c for c in df.columns if c != target]
+
+if target not in df.columns:
+    raise ValueError(f"Target column '{target}' not found in {INPUT_CSV}")
+
+# Keep only numeric columns
+numeric_cols = df.select_dtypes(include="number").columns.tolist()
+
+# Remove rows with missing numeric values
+df = df.dropna(subset=numeric_cols)
+
+commodity_cols = [c for c in numeric_cols if c != target]
 maxlag = 5
-alpha = 0.05
+alpha = 0.5
 
 corr_rows = []
 granger_rows = []

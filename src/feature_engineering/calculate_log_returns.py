@@ -13,7 +13,7 @@ from pathlib import Path
 # -- Paths -------------------------------------------------------------------
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 INPUT_CSV = PROJECT_ROOT / "data" / "processed" / "preprocessed_data.csv"
-OUTPUT_CSV = PROJECT_ROOT / "data" / "results" / "log_return_data.csv"
+OUTPUT_CSV = PROJECT_ROOT / "data" / "results" / "log_returns.csv"
 
 df = pd.read_csv(INPUT_CSV)
 numeric_cols = df.select_dtypes(include="number").columns

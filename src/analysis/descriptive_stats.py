@@ -12,7 +12,7 @@ from pathlib import Path
 
 # -- Paths -------------------------------------------------------------------
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
-INPUT_CSV = PROJECT_ROOT / "data" / "results" / "log_return_data.csv"
+INPUT_CSV = PROJECT_ROOT / "data" / "results" / "log_returns.csv"
 OUTPUT_CSV = PROJECT_ROOT / "data" / "results" / "descriptive_statistics.csv"
 
 df = pd.read_csv(INPUT_CSV)
@@ -33,7 +33,5 @@ for col in numeric_cols:
     })
 
 results = pd.DataFrame(rows)
-results.to_csv(OUTPUT_CSV, index=False)
-
 print(f"Descriptive statistics saved for {len(rows)} columns.")
 print(results.to_string(index=False))

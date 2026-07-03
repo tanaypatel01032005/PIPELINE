@@ -13,7 +13,7 @@ from pathlib import Path
 
 # -- Paths -------------------------------------------------------------------
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
-INPUT_CSV = PROJECT_ROOT / "data" / "processed" / "RAW Merged Data.csv"
+INPUT_CSV = PROJECT_ROOT / "data" / "processed" / "merged_raw_data.csv"
 OUTPUT_CSV = PROJECT_ROOT / "data" / "processed" / "preprocessed_data.csv"
 
 # Some columns in the CSV use spaces; we rename them to underscores.

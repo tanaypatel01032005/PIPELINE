@@ -1,0 +1,9 @@
+Commodity,ADF_Before,KPSS_Before,Before_Status,ADF_After,KPSS_After,After_Status
+Brent_Oil,0.18355581197442128,0.01,Non-Stationary,0.0,0.1,Stationary
+Natural_Gas,0.013559781906171922,0.01,Non-Stationary,0.0,0.1,Stationary
+Gold,1.0,0.01,Non-Stationary,0.0,0.1,Stationary
+Silver,0.9982691993049491,0.01,Non-Stationary,0.0,0.1,Stationary
+platinum,0.4539414983352638,0.01,Non-Stationary,1.06372801918826e-28,0.1,Stationary
+Palladium,0.7442104473391195,0.01,Non-Stationary,2.0380420225958618e-30,0.1,Stationary
+Oats,0.11531747523270747,0.01,Non-Stationary,8.340269710600177e-30,0.1,Stationary
+RBOB_Gasoline,0.015558799389387036,0.01,Non-Stationary,0.0,0.1,Stationary

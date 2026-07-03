@@ -25,7 +25,7 @@ if hasattr(sys.stdout, "reconfigure"):
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 RAW_DIR      = PROJECT_ROOT / "data" / "raw"
 PROCESSED_DIR = PROJECT_ROOT / "data" / "processed"
-OUTPUT_CSV   = PROCESSED_DIR / "mergedFinalData.csv"
+OUTPUT_CSV   = PROCESSED_DIR / "merged_raw_data.csv"
 
 # -- 1. Build weekday date spine ---------------------------------------------
 print("Building date spine (Mon-Fri, 2000-01-01 to 2025-12-31) ...")

@@ -17,9 +17,9 @@ warnings.filterwarnings("ignore", category=InterpolationWarning)
 
 # -- Paths -------------------------------------------------------------------
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
-INPUT_CSV = PROJECT_ROOT / "data" / "results" / "log_return_data.csv"
-RESULTS_CSV = PROJECT_ROOT / "data" / "results" / "stationarity_results.csv"
-STATIONARY_DATA_CSV = PROJECT_ROOT / "data" / "results" / "stationary_data.csv"
+INPUT_CSV = PROJECT_ROOT / "data" / "results" / "log_returns.csv"
+# RESULTS_CSV = PROJECT_ROOT / "data" / "results" / "stationarity_results.csv"
+# STATIONARY_DATA_CSV = PROJECT_ROOT / "data" / "results" / "stationary_data.csv"
 
 df = pd.read_csv(INPUT_CSV)
 numeric_cols = df.select_dtypes(include="number").columns
@@ -54,12 +54,12 @@ for col in numeric_cols:
         stationary_data[col] = series.values
 
 results = pd.DataFrame(rows)
-results.to_csv(RESULTS_CSV, index=False)
+# results.to_csv(RESULTS_CSV, index=False)
 
 min_len = min(len(v) for v in stationary_data.values())
 stat_df = pd.DataFrame({col: vals[:min_len] for col, vals in stationary_data.items()})
-stat_df.to_csv(STATIONARY_DATA_CSV, index=False)
+# stat_df.to_csv(STATIONARY_DATA_CSV, index=False)
 
-print(f"Stationarity results saved to {RESULTS_CSV}.")
-print(f"Stationary data saved to {STATIONARY_DATA_CSV}.")
+# print(f"Stationarity results saved to {RESULTS_CSV}.")
+# print(f"Stationary data saved to {STATIONARY_DATA_CSV}.")
 print(results.to_string(index=False))
