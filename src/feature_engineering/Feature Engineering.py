@@ -75,6 +75,9 @@ def main():
     # --- 1. Target Lags ---
     features_df["usd_zar_logret_lag_1"] = target.shift(1)
     features_df["usd_zar_logret_lag_2"] = target.shift(2)
+    features_df["usd_zar_logret_lag_3"] = target.shift(3)
+    features_df["usd_zar_logret_lag_4"] = target.shift(4)
+    features_df["usd_zar_logret_lag_5"] = target.shift(5)
 
     # --- 2. Commodity Lags at optimal Best_Lag ---
     for comm in selected_commodities:
