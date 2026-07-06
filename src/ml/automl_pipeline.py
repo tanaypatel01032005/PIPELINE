@@ -198,7 +198,8 @@ class ForecastingPipeline:
         self.best_metrics = None
         
     def generate_candidate_features(self, df):
-        df_aug = df.copy()
+        # ONLY keep the raw return and the target. Discard all pre-engineered commodity features.
+        df_aug = df[["usd_zar_logret", TARGET_REG]].copy()
         base = df_aug["usd_zar_logret"]
         
         # Lags
