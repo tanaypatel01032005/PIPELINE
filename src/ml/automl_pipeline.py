@@ -362,6 +362,7 @@ class ForecastingPipeline:
             elif name == "CatBoost": p.update({"random_seed": RANDOM_SEED, "verbose": 0})
                 
             best_model = ModelClass(**p)
+            best_model.fit(X_tr, self.y_train)
             val_preds = best_model.predict(X_v)
             th = find_optimal_threshold(self.y_val, val_preds)
             val_metrics = calculate_metrics(self.y_val, val_preds, threshold=th)
