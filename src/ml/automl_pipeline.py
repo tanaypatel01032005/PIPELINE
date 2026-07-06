@@ -409,7 +409,7 @@ class ForecastingPipeline:
                 elif name == "TCN":
                     model = ModelClass(input_size, num_channels=hidden, kernel_size=3, num_blocks=2, dropout=dropout).to(DEVICE)
                 elif name in ["NBEATS"]:
-                    model = ModelClass(input_size, hidden_size=hidden).to(DEVICE)
+                    model = ModelClass(input_size * seq_len, hidden_size=hidden).to(DEVICE)
                 elif name in ["NHITS"]:
                     model = ModelClass(input_size, seq_len=seq_len, hidden_size=hidden).to(DEVICE)
                 elif name == "PatchTST":
@@ -474,7 +474,7 @@ class ForecastingPipeline:
             elif name == "TCN":
                 model = ModelClass(input_size, num_channels=p["hidden_size"], kernel_size=3, num_blocks=2, dropout=p["dropout"]).to(DEVICE)
             elif name in ["NBEATS"]:
-                model = ModelClass(input_size, hidden_size=p["hidden_size"]).to(DEVICE)
+                model = ModelClass(input_size * best_seq_len, hidden_size=p["hidden_size"]).to(DEVICE)
             elif name in ["NHITS"]:
                 model = ModelClass(input_size, seq_len=best_seq_len, hidden_size=p["hidden_size"]).to(DEVICE)
             elif name == "PatchTST":
