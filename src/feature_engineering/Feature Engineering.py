@@ -70,7 +70,11 @@ def main():
     features_df["usd_zar_logret_next"] = target.shift(-1)
     features_df["usd_zar"] = combined_df["usd_zar"]
 
-    print("\nBuilding features...")
+    # 80/20 train-test split index boundary for parameter selection
+    train_size = int(len(combined_df) * 0.8)
+    target_train = target.iloc[:train_size]
+
+    print(f"\nBuilding features (Parameter selection based on training slice of size {train_size})...")
 
     # --- 1. Target Lags ---
     features_df["usd_zar_logret_lag_1"] = target.shift(1)
@@ -92,11 +96,13 @@ def main():
         series = combined_df[comm]
 
         mean_candidates = {w: series.rolling(w).mean() for w in ROLLING_WINDOWS}
-        best_mean_window = select_best(mean_candidates, target)
+        mean_candidates_train = {w: s.iloc[:train_size] for w, s in mean_candidates.items()}
+        best_mean_window = select_best(mean_candidates_train, target_train)
         features_df[f"{comm}_roll_mean_{best_mean_window}"] = mean_candidates[best_mean_window].shift(1)
 
         std_candidates = {w: series.rolling(w).std() for w in ROLLING_WINDOWS}
-        best_std_window = select_best(std_candidates, target)
+        std_candidates_train = {w: s.iloc[:train_size] for w, s in std_candidates.items()}
+        best_std_window = select_best(std_candidates_train, target_train)
         features_df[f"{comm}_roll_std_{best_std_window}"] = std_candidates[best_std_window].shift(1)
 
         commodity_params[comm] = (best_mean_window, best_std_window)
@@ -116,7 +122,8 @@ def main():
     # --- 5. Volatility Regime: search windows 5-60, pick highest abs correlation ---
     VOL_WINDOWS = range(5, 61)
     vol_candidates = {w: target.rolling(w).std() for w in VOL_WINDOWS}
-    best_vol_window = select_best(vol_candidates, target)
+    vol_candidates_train = {w: s.iloc[:train_size] for w, s in vol_candidates.items()}
+    best_vol_window = select_best(vol_candidates_train, target_train)
 
     vol = vol_candidates[best_vol_window]
     features_df[f"usd_zar_logret_roll_std_{best_vol_window}"] = vol.shift(1)
@@ -142,7 +149,8 @@ def main():
         rs = avg_gain / avg_loss
         rsi_candidates[p] = 100 - (100 / (1 + rs))
 
-    best_rsi_period = select_best(rsi_candidates, target)
+    rsi_candidates_train = {p: s.iloc[:train_size] for p, s in rsi_candidates.items()}
+    best_rsi_period = select_best(rsi_candidates_train, target_train)
     print(f"Best RSI Period = {best_rsi_period}")
     features_df[f"usd_zar_rsi_{best_rsi_period}"] = rsi_candidates[best_rsi_period].shift(1)
 
@@ -162,7 +170,8 @@ def main():
         lower = middle - 2 * std
         bb_candidates[w] = (upper - lower) / middle
 
-    best_bb_window = select_best(bb_candidates, target)
+    bb_candidates_train = {w: s.iloc[:train_size] for w, s in bb_candidates.items()}
+    best_bb_window = select_best(bb_candidates_train, target_train)
     print(f"Best Bollinger Window = {best_bb_window}")
     features_df[f"usd_zar_bollinger_width_{best_bb_window}"] = bb_candidates[best_bb_window].shift(1)
 

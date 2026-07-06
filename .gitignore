@@ -1,0 +1,44 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environment
+venv/
+.venv/
+env/
+.env
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Kaggle / Outputs
+checkpoints/
+final_output/
+*.log
+*.joblib
+*.pt
+*.pth
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

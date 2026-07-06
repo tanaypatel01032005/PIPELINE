@@ -6,3 +6,10 @@ statsmodels
 matplotlib
 seaborn
 scikit-learn
+torch
+optuna
+joblib
+xgboost
+lightgbm
+catboost
+prophet
