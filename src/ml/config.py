@@ -48,7 +48,18 @@ BATCH_SIZE = 32
 # ==============================================================================
 # DEVICE CONFIGURATION
 # ==============================================================================
-DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+def get_device():
+    if torch.cuda.is_available():
+        try:
+            # Test if CUDA is actually functional
+            x = torch.zeros(1).cuda()
+            return torch.device("cuda")
+        except Exception as e:
+            print(f"WARNING: CUDA is available but failed verification ({e}). Falling back to CPU.")
+            return torch.device("cpu")
+    return torch.device("cpu")
+
+DEVICE = get_device()
 
 def print_gpu_info():
     print("\n" + "="*80)
