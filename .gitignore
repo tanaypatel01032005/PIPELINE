@@ -33,6 +33,7 @@ env/
 checkpoints/
 final_output/
 catboost_info/
+lightning_logs/
 *.log
 *.joblib
 *.pt
