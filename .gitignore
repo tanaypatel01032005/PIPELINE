@@ -32,6 +32,7 @@ env/
 # Kaggle / Outputs
 checkpoints/
 final_output/
+catboost_info/
 *.log
 *.joblib
 *.pt
