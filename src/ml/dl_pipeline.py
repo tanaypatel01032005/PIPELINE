@@ -75,8 +75,9 @@ optuna.logging.set_verbosity(optuna.logging.WARNING)
 # SECTION 0  CONFIGURATION  (mirror of model_pipeline.py constants)
 # ==============================================================================
 
+from config import DEVICE
 RANDOM_SEED        = 42
-DEVICE             = "cuda" if torch.cuda.is_available() else "cpu"
+# DEVICE             = "cuda" if torch.cuda.is_available() else "cpu"
 ENSEMBLE_TOLERANCE = 0.03   # ensemble member must be within 3 % of best RMSE
 PATIENCE           = 3      # Optuna early-stopping patience (no-improvement trials)
 TRAIN_PATIENCE     = 4      # early-stopping patience inside the training loop

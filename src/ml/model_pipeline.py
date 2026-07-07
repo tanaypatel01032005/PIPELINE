@@ -82,8 +82,9 @@ OPTUNA_TRIAL_LIMITS = {
     "GRU": 15,
 }
 
+from config import DEVICE
 PATIENCE = 8
-DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
+# DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 DATA_PATH = PROJECT_ROOT / "data" / "processed" / "engineered_features.csv"
