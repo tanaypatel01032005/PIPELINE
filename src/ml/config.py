@@ -51,8 +51,10 @@ BATCH_SIZE = 32
 def get_device():
     if torch.cuda.is_available():
         try:
-            # Test if CUDA is actually functional
-            x = torch.zeros(1).cuda()
+            # Test if CUDA and recurrent cuDNN kernels are actually functional
+            x = torch.zeros(1, 1, 1).cuda()
+            rnn = torch.nn.RNN(1, 1).cuda()
+            _ = rnn(x)
             return torch.device("cuda")
         except Exception as e:
             print(f"WARNING: CUDA is available but failed verification ({e}). Falling back to CPU.")
